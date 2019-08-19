@@ -1,0 +1,5 @@
+<div class="custom-input">
+  <button (click)="decrement($event)" [disabled]="active">-</button>
+  <span [(ngModel)]="model" ngDefaultControl> {{model}}</span>
+  <button (click)="increment($event)" [disabled]="active">+</button>
+</div>
