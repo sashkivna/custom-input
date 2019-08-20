@@ -20,6 +20,7 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Val
 export class CustomInputComponent implements ControlValueAccessor, Validator {
   model: number;
   parseError: string;
+  isInvalid = false;
 
   onChange = (value: number) => {};
   onTouch = () => {};
@@ -51,6 +52,9 @@ export class CustomInputComponent implements ControlValueAccessor, Validator {
   }
 
   public validate(c: FormControl) {
+    if (this.model < 0) {
+      this.isInvalid = true;
+    }
     return (!this.parseError) ? null : {
       jsonParseError: {
         valid: false,

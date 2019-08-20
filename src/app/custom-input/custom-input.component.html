@@ -1,5 +1,6 @@
 <div class="custom-input">
   <button (click)="decrement()">-</button>
-  <span [(ngModel)]="model" ngDefaultControl> {{model}}</span>
+  <span [(ngModel)]="model" ngDefaultControl > {{model}}</span>
   <button (click)="increment()">+</button>
 </div>
+<div *ngIf="isInvalid" [ngClass]="{internalValidator: isInvalid}"> Value cant be lower than 0!</div>
