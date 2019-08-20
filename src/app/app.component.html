@@ -1,18 +1,11 @@
-<!--<app-custom-input ngDefaultControl [(ngModel)]="test"></app-custom-input>-->
-
 <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
-<!--  <label>-->
-<!--    Name:-->
-<!--    <input type="text" formControlName="name" required>-->
-<!--  </label>-->
+  <label>
+    Name:
+    <input type="text" formControlName="name" disabled>
+  </label>
 
   <app-custom-input ngDefaultControl
                     formControlName="workingExperience"
                     required
-                    disabled="false"
-                    (touched)="onCustomInputTouched({touched: $event})"
-                    (dissabled)="onCustomInputTouched({dissabled: $event})"></app-custom-input>
+  ></app-custom-input>
 </form>
-<p>form is valid: {{ profileForm.valid ? 'true' : 'false' }}</p>
-<p>form is touched: {{ profileForm.touched ? 'true' : 'false' }}</p>
-<p>form is disabled: {{ profileForm.disabled ? 'true' : 'false' }}</p>

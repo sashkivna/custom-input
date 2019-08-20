@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   test = 5;
 
   profileForm: FormGroup = new FormGroup({
@@ -15,25 +15,5 @@ export class AppComponent implements OnInit {
   });
 
   onSubmit() {
-  }
-
-  constructor(private fb: FormBuilder) {
-  }
-
-
-  onCustomInputTouched(obj) {
-    // @ts-ignore
-    this.profileForm.touched = obj.touched;
-    // @ts-ignore
-    if (obj.dissabled === true) {
-    this.profileForm.disable();
-    }
-  }
-
-  ngOnInit(): void {
-    this.profileForm = this.fb.group({
-      workingExperience: this.test,
-      name: 'Jane'
-    });
   }
 }

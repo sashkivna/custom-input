@@ -1,4 +1,4 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {Component, forwardRef, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator} from '@angular/forms';
 
 @Component({
@@ -17,59 +17,37 @@ import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Val
       multi: true,
     }   ]
 })
-export class CustomInputComponent implements OnInit, ControlValueAccessor, Validator {
-  @Input() ngModel;
-  @Input() disabled;
-  @Output() touched = new EventEmitter<boolean>();
-  @Output() dissabled = new EventEmitter<boolean>();
+export class CustomInputComponent implements ControlValueAccessor, Validator {
   model: number;
-  active: boolean;
-  private jsonString: string;
-  private parseError: boolean;
-  private data: any;
+  parseError: string;
 
-  private propagateChange = (data: any) => {};
+  onChange = (value: number) => {};
+  onTouch = () => {};
 
-  public writeValue(obj: any) {
-    if (obj) {
-      this.data = obj;
-      this.model = obj;
-      this.jsonString =
-        JSON.stringify(this.data, undefined, 4);
+  public writeValue(model: number) {
+    if (model) {
+      this.model = model;
     }
   }
 
   public registerOnChange(fn: any) {
-    this.propagateChange = fn;
+    this.onChange = fn;
   }
 
   public registerOnTouched() {
+    this.onTouch();
   }
 
-  private onChange(event) {
-    this.propagateChange(this.data);
-  }
-
-  constructor() { }
-
-  ngOnInit() {
-    this.ngModel ? this.model = this.ngModel : this.model = 0;
-    this.disabled === 'true' ? this.active = true : this.active = false;
-    this.dissabled.emit(this.active);
-  }
-
-  increment(event) {
-    this.touched.emit(true);
-    this.registerOnTouched();
-    this.registerOnChange(event);
+  increment() {
     this.model++;
+    this.onChange(this.model);
+    this.onTouch();
   }
 
-  decrement(event) {
-    this.touched.emit(true);
-    this.registerOnTouched();
-    this.registerOnChange(event);
+  decrement() {
     this.model--;
+    this.onChange(this.model);
+    this.onTouch();
   }
 
   public validate(c: FormControl) {
@@ -81,7 +59,6 @@ export class CustomInputComponent implements OnInit, ControlValueAccessor, Valid
   }
 
   setDisabledState(isDisabled: boolean) {
-   // this.renderer.setElementProperty(this.textInput.nativeElement, 'disabled', isDisabled);
-    // disable other components here
+    // this.disabled = isDisabled;
   }
 }
